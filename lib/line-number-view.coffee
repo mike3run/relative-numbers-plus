@@ -67,21 +67,6 @@ class LineNumberView
     width = Math.max(0, totalLines.toString().length - currentIndex.toString().length)
     Array(width + 1).join '&nbsp;'
 
-  # Toggle the show-absolute class from the line number gutter view
-  _toggleAbsoluteClass: (isActive=false) ->
-    classNames = @lineNumberGutterView.className.split(' ')
-
-    # Add the show-absolute class if the setting is active and the class
-    # was not previously added
-    if isActive
-      classNames.push('show-absolute')
-      @lineNumberGutterView.className = classNames.join(' ')
-    # Remove the show-absolute class if the settings is not active and is in
-    # the list of active classNames on the view.
-    else
-      classNames = classNames.filter((name) -> name != 'show-absolute')
-      @lineNumberGutterView.className = classNames.join(' ')
-
   # Update the line numbers on the editor
   _update: () =>
     # If the gutter is updated asynchronously, we need to do the same thing
@@ -137,12 +122,8 @@ class LineNumberView
       if lineNumberElement.innerHTML.indexOf('•') == -1
         lineNumberElement.innerHTML = "<span class=\"absolute\">#{absoluteText}</span><span class=\"#{relativeClass}\">#{relativeText}</span><div class=\"icon-right\"></div>"
 
-  _updateAbsoluteNumbers: () =>
-    className = @lineNumberGutterView.className
-    if not className.includes('show-absolute') and @showAbsoluteNumbers
-      @_toggleAbsoluteClass(true)
-    else if className.includes('show-absolute') and not @showAbsoluteNumbers
-      @_toggleAbsoluteClass(false)
+  _updateAbsoluteNumbers: ->
+    @lineNumberGutterView.classList.toggle('show-absolute', @showAbsoluteNumbers)
 
   # Undo changes to DOM
   _undo: () =>
@@ -155,6 +136,4 @@ class LineNumberView
       if lineNumberElement.innerHTML.indexOf('•') == -1
         lineNumberElement.innerHTML = "#{absoluteText}<div class=\"icon-right\"></div>"
 
-    # Remove show-absolute class name if present
-    if @lineNumberGutterView.className.includes('show-absolute')
-      @_toggleAbsoluteClass(false)
+    @lineNumberGutterView.classList.remove('show-absolute')
