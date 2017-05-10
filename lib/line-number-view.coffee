@@ -106,7 +106,7 @@ class LineNumberView
     else
       currentLineNumber = currentLineNumber + 1
 
-    lineNumberElements = @editorView.rootElement?.querySelectorAll('.line-number')
+    lineNumberElements = @editorView.rootElement?.querySelectorAll('.line-numbers .line-number')
     offset = if @startAtOne then 1 else 0
     counting_attribute = if @softWrapsCount then 'data-screen-row' else 'data-buffer-row'
 
