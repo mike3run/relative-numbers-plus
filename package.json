@@ -1,5 +1,5 @@
 {
-  "name": "relative-numbers",
+  "name": "relative-numbers-plus",
   "main": "./lib/relative-numbers",
   "version": "0.8.0",
   "description": "Relative line numbers for Atom",
